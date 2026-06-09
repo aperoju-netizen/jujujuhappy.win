@@ -9,377 +9,453 @@
         
         body, html {
             height: 100%;
+            width: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            background: #060a13 url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=90&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            /* 🎨 即刻网页端标志性的极简浅灰蓝背景 */
+            background: #f4f6f9;
             display: flex;
-            justify-content: center;
-            align-items: center;
             overflow: hidden;
+            position: relative;
         }
 
-        /* 极简高级名片卡片容器 */
-        .jike-card {
+        /* ================= 🎆 纯 CSS 烟花引擎 ================= */
+        .fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fireworkBurst 5s cubic-bezier(0.1, 0.8, 0.1, 1) infinite;
+        }
+        .firework:nth-child(1) { top: 25%; left: 20%; background: #FFE411; animation-delay: 0s; color: #FFE411; }
+        .firework:nth-child(2) { top: 20%; left: 80%; background: #1890ff; animation-delay: 2s; color: #1890ff; }
+
+        @keyframes fireworkBurst {
+            0% { transform: translate3d(0, 40vh, 0) scale(1); opacity: 1; box-shadow: 0 0 0px rgba(255,255,255,0); }
+            30% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; box-shadow: -60px -60px 0 currentColor, 80px -60px 0 currentColor, -60px 80px 0 currentColor, 80px 80px 0 currentColor, 0px -80px 0 currentColor, 0px 80px 0 currentColor; }
+            100% { transform: translate3d(0, 30px, 0) scale(0.2); opacity: 0; box-shadow: -120px -120px 8px rgba(255,255,255,0), 120px -120px 8px rgba(255,255,255,0); }
+        }
+
+        /* ================= 💛 左侧即刻官方固定导航栏 ================= */
+        .jike-sidebar {
+            width: 68px;
+            height: 100%;
             background: #ffffff;
-            width: 90%;
-            max-width: 460px;
-            border-radius: 28px;
-            padding: 45px 35px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            position: relative;
+            border-right: 1px solid #e6ebf4;
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeInCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            padding: 24px 0;
+            justify-content: space-between;
+            z-index: 100;
+            flex-shrink: 0;
         }
-
-        /* 顶部干净的艺术标栏 */
-        .card-brand {
+        .sidebar-top {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            color: #1e293b;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-            opacity: 0.8;
+            gap: 28px;
+            width: 100%;
         }
-
-        /* 音乐播放控制器样式 */
-        .audio-controller {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            cursor: pointer;
+        .jike-logo {
             width: 32px;
             height: 32px;
+            background: #FFE411;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f1f5f9;
+            font-weight: 900;
+            color: #000000;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(255, 228, 17, 0.3);
+        }
+        .nav-item {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #111827;
+            background: #f4f6f9;
+        }
+        .nav-item.add-btn {
+            background: #FFE411;
+            color: #000000;
+            box-shadow: 0 4px 12px rgba(255, 228, 17, 0.4);
+        }
+        .nav-item.add-btn:hover { background: #f5da00; transform: scale(1.05); }
+        .sidebar-icon { width: 22px; height: 22px; fill: currentColor; }
+
+        /* ================= 🎵 右上角全景悬浮黑胶音乐控制器 ================= */
+        .music-player-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+        .music-toggle-btn {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e6ebf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(7, 14, 26, 0.05);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .music-toggle-btn:hover { transform: scale(1.06); background: #fafafa; }
+        .music-icon { width: 18px; height: 18px; fill: #475569; }
+        .music-playing {
+            border-color: #FFE411;
+            box-shadow: 0 0 14px rgba(255, 228, 17, 0.45);
+        }
+        .music-playing .music-icon { fill: #000000; animation: recordRotate 4s linear infinite; }
+        @keyframes recordRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* ================= 📱 绝对加固：大页面中央内容容器 ================= */
+        .main-content {
+            flex: 1;
+            width: calc(100% - 68px);
+            height: 100%;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            overflow-y: auto;
+            padding: 40px 24px;
             z-index: 10;
         }
-        .audio-controller:hover {
-            background: #e2e8f0;
-            transform: scale(1.05);
-        }
-        .audio-icon {
-            width: 16px;
-            height: 16px;
-            fill: #475569;
-        }
-        .rotating {
-            animation: rotateIcon 3s linear infinite;
-        }
-        @keyframes rotateIcon {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
 
-        /* 圆形人画像素级居中容器 */
-        .avatar-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+        /* 🏢 即刻风主页黄金大卡片 */
+        .jike-main-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 600px; /* 锁定即刻最佳视效宽度 */
+            border-radius: 24px;
+            border: 1px solid #e6ebf4;
+            box-shadow: 0 12px 40px rgba(7, 14, 26, 0.04);
             overflow: hidden;
-            border: 4px solid #ffffff;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-        }
-        .avatar-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 30%; 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            /* 🛠️ 双保险核心修复：利用自动外边距强行霸占剩余空间，100%上下左右居中 */
+            margin: auto !important; 
+            animation: jikeCardFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* 核心品牌名复合排版区域 */
-        .brand-name-container {
-            margin-bottom: 25px;
+        /* 顶部 Banner 区 */
+        .card-banner {
             width: 100%;
+            height: 160px;
+            background: #060a13 url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=90&w=800&auto=format&fit=crop') no-repeat center center/cover;
         }
-        .brand-en {
-            font-size: 1.15rem;
-            color: #64748b;
+
+        /* 个人信息主区块 */
+        .profile-header-block {
+            padding: 0 28px 24px 28px;
+            text-align: left;
+            position: relative;
+            border-bottom: 1px solid #f4f6f9;
+        }
+
+        /* 头像打破边界重叠 */
+        .jike-avatar-wrapper {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-top: -48px;
+            background: #f1f5f9;
+            margin-bottom: 14px;
+        }
+        .jike-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+
+        .header-action-btn {
+            position: absolute;
+            top: 16px;
+            right: 28px;
+            padding: 6px 20px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #475569;
+            font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .brand-zh {
-            font-size: 1.65rem;
-            color: #0f172a;
-            font-weight: 700;
-            letter-spacing: 4px;
+        .header-action-btn:hover { background: #f8fafc; color: #111827; }
+
+        .jike-name {
+            font-size: 1.45rem;
+            color: #111827;
+            font-weight: 800;
             display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 即刻徽章小标签 */
+        .jike-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .jike-tag {
+            font-size: 0.78rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .tag-geo { background: #fdf2f8; color: #db2777; }
+        .tag-work { background: #eff6ff; color: #2563eb; }
+        .tag-star { background: #fef3c7; color: #d97706; }
+
+        /* Tab栏 */
+        .jike-tabs {
+            display: flex;
+            gap: 28px;
+            padding: 0 28px;
+            border-bottom: 1px solid #f4f6f9;
+            background: #ffffff;
+        }
+        .jike-tab {
+            padding: 14px 0;
+            font-size: 0.92rem;
+            color: #475569;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+        }
+        .jike-tab.active { color: #111827; }
+        .jike-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFE411;
+            border-radius: 20px;
+        }
+
+        /* ================= 📝 即刻动态流区域 ================= */
+        .jike-feed-list { background: #ffffff; display: flex; flex-direction: column; }
+        .feed-item { padding: 24px; display: flex; gap: 14px; text-align: left; }
+        .feed-avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .feed-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .feed-main { flex: 1; }
+        .feed-user-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .feed-user-name { font-weight: 700; color: #111827; font-size: 0.95rem; }
+        .feed-pin { font-size: 0.75rem; color: #ef4444; font-weight: 700; display: flex; align-items: center; gap: 2px; }
+        .feed-time { font-size: 0.78rem; color: #94a3b8; margin-bottom: 10px; }
+
+        .feed-content { color: #111827; font-size: 0.96rem; line-height: 1.65; margin-bottom: 16px; }
+        .poem-box { margin-top: 12px; padding-left: 12px; border-left: 3px solid #FFE411; color: #4b5563; }
+        .poem-box p { margin-bottom: 4px; }
+
+        /* 联络工具方块矩阵 */
+        .feed-buttons-matrix { display: flex; gap: 10px; margin-bottom: 16px; width: 100%; }
+        .matrix-btn {
+            flex: 1;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-        }
-        .brand-zh::before, .brand-zh::after {
-            content: "";
-            display: inline-block;
-            width: 12px;
-            height: 1px;
-            background: #cbd5e1;
-            margin: 0 12px;
-            vertical-align: middle;
-        }
-
-        /* 核心精神诗篇区 */
-        .poem-section {
-            width: 100%;
-            margin-bottom: 25px;
-            padding: 0 10px;
-        }
-        .poem-line {
-            color: #475569;
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            line-height: 2;
-            font-weight: 400;
-        }
-
-        /* 独立态度宣言卡片 */
-        .bio-statement {
+            gap: 6px;
             background: #f8fafc;
-            padding: 14px 18px;
-            border-radius: 14px;
-            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
             color: #334155;
-            line-height: 1.6;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            border: 1px solid #f1f5f9;
-        }
-
-        /* 社交矩阵区 */
-        .social-matrix {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
-            width: 100%;
-        }
-        .social-item {
-            width: calc(50% - 6px);
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px;
-            background: #0f172a !important;
-            color: #ffffff !important;
-            text-decoration: none;
-            padding: 12px 6px;
+            padding: 11px 0;
             border-radius: 12px;
             font-size: 0.82rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-        }
-        .social-item:hover {
-            background: #1e293b !important;
-            transform: translateY(-1px);
-        }
-        
-        .social-icon {
-            width: 16px !important;
-            height: 16px !important;
-            fill: #ffffff !important;
-            flex-shrink: 0 !important;
-        }
-
-        /* 全显邮箱按钮 */
-        .email-action {
-            width: 100%;
-        }
-        .email-btn {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px;
-            width: 100%;
-            background: #0f172a !important;
-            color: #ffffff !important;
             text-decoration: none;
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            transition: all 0.25s ease;
-        }
-        .email-btn:hover {
-            background: #1e293b !important;
-            transform: translateY(-1.5px);
-            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15);
-        }
-
-        /* 右下角极简小飘带 */
-        .ribbon {
-            position: absolute;
-            bottom: -8px;
-            right: 12px;
-            background: #f1f5f9;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
-        .ribbon a {
-            display: block;
-            color: #64748b;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            letter-spacing: 1px;
-            text-decoration: none;
-        }
-        .ribbon:hover {
-            background: #e2e8f0;
-            transform: translateY(-1px);
-        }
+        .matrix-btn:hover { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
 
-        @keyframes fadeInCard {
-            from { opacity: 0; transform: translateY(15px); }
+        /* 即刻标配互动栏 */
+        .feed-interact-bar { display: flex; justify-content: space-between; max-width: 380px; color: #86909c; font-size: 0.82rem; margin-top: 14px; }
+        .interact-item { display: flex; align-items: center; gap: 6px; cursor: pointer; transition: color 0.2s; }
+        .interact-item:hover { color: #111827; }
+        .interact-icon { width: 16px; height: 16px; fill: currentColor; }
+
+        /* 右下角固定勋章 */
+        .whats-new-badge {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #ffffff;
+            border: 1px solid #e6ebf4;
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 16px rgba(7, 14, 26, 0.04);
+            text-decoration: none;
+            z-index: 100;
+        }
+        .whats-new-dot { width: 6px; height: 6px; background: #1890ff; border-radius: 50%; }
+
+        @keyframes jikeCardFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 400px) {
-            .jike-card { padding: 35px 20px; }
-            .brand-en { font-size: 1.05rem; }
-            .brand-zh { font-size: 1.45rem; }
-            .poem-line { font-size: 0.9rem; }
-            .social-item { font-size: 0.76rem; gap: 6px; }
+        @media (max-width: 768px) {
+            .jike-sidebar { display: none; }
+            .main-content { padding: 16px 12px; width: 100%; }
+            .jike-main-card { border-radius: 16px; }
+            .feed-buttons-matrix { flex-direction: column; gap: 8px; }
+            .matrix-btn { width: 100%; }
+            .music-player-container { top: 16px; right: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 音频标签 -->
-    <audio id="bg-music" src="jyc.mp3" loop></audio>
-
-    <div class="jike-card">
-        
-        <!-- 音乐控制按钮 -->
-        <div class="audio-controller" id="music-ctrl" title="播放/暂停音乐">
-            <svg class="audio-icon" id="music-icon" viewBox="0 0 24 24">
-                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h6V3h-6z"/>
-            </svg>
-        </div>
-        
-        <!-- 顶部艺术标识 -->
-        <div class="card-brand">
-            JOURNEY YIELDS CRESCENT
-        </div>
-
-        <!-- 头像区 -->
-        <div class="avatar-container">
-            <img src="JYC.jpg" alt="JYC" onerror="this.style.display='none';">
-        </div>
-
-        <!-- 优化后的高级名字排版区 -->
-        <div class="brand-name-container">
-            <div class="brand-en">J Y C</div>
-            <h2 class="brand-zh">巨寅初</h2>
-           
-        </div>
-        
-        <!-- 精神诗篇叙事区 -->
-        <div class="poem-section">
-            <p class="poem-line">走过漫长独行的路途</p>
-            <p class="poem-line">所有沉淀与奔赴</p>
-            <p class="poem-line">终会迎来属于自己的弯月星光</p>
-            <p class="poem-line">“ 慢慢来，一切皆有回甘 ”</p>
-        </div>
-        
-        <!-- 私人领地态度空间 -->
-        <div class="bio-statement">
-            清醒自持，温柔且有锋芒。
-        </div>
-
-        <!-- 社交网络矩阵 -->
-        <div class="social-matrix">
-            <a href="https://www.instagram.com/aeo.ju" target="_blank" class="social-item">
-                <svg class="social-icon" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                </svg>
-                 aeo.ju
-            </a>
-            
-            <span class="social-item" style="cursor: text;">
-               <svg class="social-icon" viewBox="0 0 24 24">
-                    <path d="M15.3 12.3c0-.21-.18-.39-.39-.39-.21 0-.39.18-.39.39 0 .22.18.39.39.39.21 0 .39-.17.39-.39zm2.49 0c0-.21-.18-.39-.39-.39-.22 0-.39.18-.39.39 0 .22.17.39.39.39.21 0 .39-.17.39-.39zm1.36-2.58c.24-2.55-1.92-4.83-4.9-5.14-3.41-.35-6.52 1.64-7 4.79-.17 1.13.13 2.23.8 3.12l-.52 1.62c-.06.19.11.36.28.28l1.88-.94c.88.35 1.83.51 2.8.48 3.51-.12 6.47-2.3 6.66-4.21zm-10.74.07c0-.26-.22-.48-.48-.48-.27 0-.49.22-.49.48 0 .27.22.49.49.49.26 0 .48-.22.48-.49zm3.43 0c0-.26-.22-.48-.48-.48-.26 0-.48.22-.48.48 0 .27.22.49.48.49.26 0 .48-.22.48-.49zm2.39 4.88c-.14-.01-.27.05-.35.15l-.94.94-1.18-.39c-.11-.04-.24-.02-.34.05a5.558 5.558 0 01-2.48.59c-3.14 0-5.69-1.94-5.69-4.34 0-1.74 1.34-3.23 3.33-3.95-.08.35-.12.72-.12 1.1 0 3.2 2.91 5.8 6.51 5.8.42 0 .84-.04 1.25-.12.01-.01.01-.02.01-.03z"/>
-                </svg>
-                 aeo_cn
-            </span>
-        </div>
-
-        <!-- 联系方式邮箱 -->
-        <div class="email-action">
-            <a href="mailto:apero.ju@gmail.com" class="email-btn">
-                <svg class="social-icon" viewBox="0 0 24 24" style="width: 16px !important; height: 16px !important; margin-right: 8px;">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
-                apero.ju@gmail.com
-            </a>
-        </div>
-
-        <!-- 页脚标 -->
-        <div class="ribbon">
-            <a href="http://jujujuhappy.win">www.jujujuhappy.win</a>
-        </div>
-
+    <!-- 🌌 动态纯 CSS 烟花层 -->
+    <div class="fireworks-container">
+        <div class="firework"></div>
+        <div class="firework"></div>
     </div>
 
-    <script>
-        const music = document.getElementById('bg-music');
-        const musicCtrl = document.getElementById('music-ctrl');
-        const musicIcon = document.getElementById('music-icon');
+    <!-- 💛 左侧原汁原味即刻固定侧边栏 -->
+    <div class="jike-sidebar">
+        <div class="sidebar-top">
+            <div class="jike-logo">J</div>
+            <div class="nav-item active">
+                <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+            <div class="nav-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+            <div class="nav-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+            </div>
+            <div class="nav-item add-btn">
+                <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </div>
+        </div>
+        <div class="nav-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        </div>
+    </div>
+    <!-- 📱 全景中央对齐主容器 -->
+    <div class="main-content">
+        <div class="jike-main-card">
+            
+            <!-- 大Banner背景 -->
+            <div class="card-banner"></div>
 
-        function togglePlay() {
-            if (music.paused) {
-                music.play().then(() => {
-                    musicIcon.classList.add('rotating');
-                }).catch(err => {
-                    console.log("播放被拦截: ", err);
-                });
-            } else {
-                music.pause();
-                musicIcon.classList.remove('rotating');
-            }
-        }
+            <!-- 个人基本详情区 -->
+            <div class="profile-header-block">
+                <div class="jike-avatar-wrapper">
+                    <img src="JYC.jpg" alt="巨寅初">
+                </div>
+                <button class="header-action-btn">已关注</button>
+                
+                <h2 class="jike-name">Journey Yields Crescent 🌙</h2>
+                
+                <div class="jike-tag-container">
+                    <span class="jike-tag tag-geo">📍 上海</span>
+                    <span class="jike-tag tag-work">💼 风犬少年的天空</span>
+                    <span class="jike-tag tag-star">✨ 慢慢来，一切皆有回甘</span>
+                </div>
+            </div>
 
-        musicCtrl.addEventListener('click', function(e) {
-            e.stopPropagation();
-            togglePlay();
-        });
+            <!-- 导航标签 -->
+            <div class="jike-tabs">
+                <div class="jike-tab active">动态</div>
+                <div class="jike-tab"> <a href="https://www.instagram.com/aeo.ju" class="matrix-btn">相册</a></div>
+            </div>
+            <!-- 动态流卡片 -->
+            <div class="jike-feed-list">
+                <div class="feed-item">
+                    <div class="feed-avatar">
+                        <img src="JYC.jpg" alt="巨寅初">
+                    </div>
+                    <div class="feed-main">
+                        <div class="feed-user-info">
+                            <span class="feed-user-name">巨寅初</span>
+                            <span class="feed-pin">📌 置顶</span>
+                        </div>
+                        <div class="feed-time">1994/09/03 · 个人网络领地</div>
+                        
+                        <div class="feed-content">
+                            想发什么就发什么，想什么时候发就什么时候发。✌️
+                            <div class="poem-box">
+                                <p>清醒自持，</p>
+                                <p>温柔且有锋芒。</p>
+                                <p>走过漫长独行的路途，</p>
+                                <p>所有沉淀与奔赴，</p>
+                                <p style="font-weight: 700; color: #111827;">终会迎来属于自己的弯月星光。🌙</p>
+                            </div>
+                        </div>
 
-        function autoPlayOnFirstInteraction() {
-            if (music.paused) {
-                music.play().then(() => {
-                    musicIcon.classList.add('rotating');
-                    document.removeEventListener('click', autoPlayOnFirstInteraction);
-                    document.removeEventListener('touchstart', autoPlayOnFirstInteraction);
-                }).catch(() => {});
-            }
-        }
+                        <!-- 联络矩阵附件 -->
+                        <div class="feed-buttons-matrix">
+                            <a href="https://www.instagram.com/aeo.ju" target="_blank" class="matrix-btn">
+                                Instagram: aeo.ju
+                            </a>
+                            <span class="matrix-btn" style="cursor: text;">
+                                微信: aeo_cn
+                            </span>
+                            <a href="mailto:apero.ju@gmail.com" class="matrix-btn">
+                                邮箱: apero.ju@gmail.com
+                            </a>
+                        </div>
 
-        document.addEventListener('click', autoPlayOnFirstInteraction);
-        document.addEventListener('touchstart', autoPlayOnFirstInteraction);
+                        <!-- 转发、评论、点赞互动条 -->
+                        <div class="feed-interact-bar">
+                            <div class="interact-item">
+                                <svg class="interact-icon" viewBox="0 0 24 24"><path d="M15 8v4H5v2h10v4l6-5-6-5z"/></svg> 03
+                            </div>
+                            <div class="interact-item">
+                                <svg class="interact-icon" viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2+H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> 09
+                            </div>
+                            <div class="interact-item" style="color: #ef4444;">
+                                <svg class="interact-icon" viewBox="0 0 24 24" style="fill: #ef4444;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 2026
+                            </div>
+                        </div>
 
-        document.addEventListener("WeixinJSBridgeReady", function () {
-            music.play().then(() => {
-                musicIcon.classList.add('rotating');
-            });
-        }, false);
-    </script>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+
+    <!-- 右下角 What's new 挂载链接 -->
+    <a href="http://jujujuhappy.win" target="_blank" class="whats-new-badge">
+        <span class="whats-new-dot"></span>
+        jujujuhappy.win
+    </a>
 </body>
 </html>
