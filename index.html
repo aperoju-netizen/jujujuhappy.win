@@ -101,9 +101,48 @@
             line-height: 1.6;
             width: 100%;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
             border: 1px solid #f1f5f9;
+        }
+
+        /* 社交矩阵区（兼顾文字留存与极客徽标的自适应平衡排版） */
+        .social-matrix {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+        .social-item {
+            width: calc(50% - 6px);
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px;
+            background: #0f172a !important;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 6px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+            white-space: nowrap; /* 防止屏幕缩放时文字尴尬换行 */
+        }
+        .social-item:hover {
+            background: #1e293b !important;
+            transform: translateY(-1px);
+        }
+        
+        /* 官方原厂矢量图标防御加固 */
+        .social-icon {
+            width: 16px !important;
+            height: 16px !important;
+            fill: #ffffff !important; /* 100% 显色防御 */
+            flex-shrink: 0 !important;
         }
 
         /* 全显邮箱按钮 */
@@ -111,10 +150,13 @@
             width: 100%;
         }
         .email-btn {
-            display: block;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px;
             width: 100%;
-            background: #0f172a;
-            color: #ffffff;
+            background: #0f172a !important;
+            color: #ffffff !important;
             text-decoration: none;
             padding: 14px;
             border-radius: 14px;
@@ -124,7 +166,7 @@
             transition: all 0.25s ease;
         }
         .email-btn:hover {
-            background: #1e293b;
+            background: #1e293b !important;
             transform: translateY(-1.5px);
             box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15);
         }
@@ -163,6 +205,7 @@
             .jike-card { padding: 35px 20px; }
             .user-name { font-size: 1.4rem; }
             .poem-line { font-size: 0.9rem; }
+            .social-item { font-size: 0.76rem; gap: 6px; }
         }
     </style>
 </head>
@@ -193,17 +236,41 @@
 
         <!-- 私人领地态度空间 -->
         <div class="bio-statement">
-            清醒自持，温柔且有锋芒。
+            清醒自持，温柔且有锋芒。想发什么就发什么，想什么时候发就什么时候发。
         </div>
 
-        <!-- 联系方式 -->
+        <!-- 极简社交网络矩阵（官方经典矢量徽标 + 完整账号信息版） -->
+        <div class="social-matrix">
+            <!-- Instagram 原厂徽标与账号 -->
+            <a href="https://www.instagram.com/aeo.ju" target="_blank" class="social-item">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                 aeo.ju
+            </a>
+            
+            <!-- 微信 原厂徽标与账号 -->
+            <span class="social-item" style="cursor: text;">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M8.42 13.56c0-.3.23-.53.53-.53s.53.23.53.53-.23.53-.53.53-.53-.23-.53-.53zm4.24 0c0-.3.23-.53.53-.53s.53.23.53.53-.23.53-.53.53-.53-.23-.53-.53zm6.36-4.5c0-3.32-3.44-6-7.68-6.14-4.5.15-8.12 3.04-8.12 6.64 0 2.07 1.2 3.9 3.07 5.07-.15.45-.53 1.83-.53 1.83l2.13-1.12c1.02.3 2.1.45 3.23.45 4.5 0 8.12-3.04 8.12-6.64s.15-.09.15-.09zm-1.07 6.13c2.97-.26 5.31-2.22 5.31-4.63 0-2.58-2.67-4.66-5.96-4.66-3.3 0-5.96 2.09-5.96 4.66 0 2.58 2.66 4.66 5.96 4.66.71 0 1.39-.1 2.03-.28l1.58.84-.39-1.37s.43-.22.43-.22z"/>
+                </svg>
+                 aeo_cn
+            </span>
+        </div>
+
+        <!-- 联系方式邮箱大按钮 -->
         <div class="email-action">
-            <a href="mailto:apero.ju@gmail.com" class="email-btn">✉️ apero.ju@gmail.com</a>
+            <a href="mailto:apero.ju@gmail.com" class="email-btn">
+                <svg class="social-icon" viewBox="0 0 24 24" style="width: 16px !important; height: 16px !important; margin-right: 8px;">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                apero.ju@gmail.com
+            </a>
         </div>
 
-        <!-- 极简页脚标（已成功调整为根域名超链接） -->
+        <!-- 极简页脚标 -->
         <div class="ribbon">
-            <a href="http://jujujuhappy.win">jujujuhappy.win</a>
+            <a href="http://jujujuhappy.win">www.jujujuhappy.win</a>
         </div>
 
     </div>
