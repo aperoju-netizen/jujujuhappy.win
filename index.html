@@ -1,248 +1,212 @@
-<!DOCTYPE HTML>
-<!--
-	Spectral by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Journey Yields Crescent ｜ JYC🌙</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<style>
-			/* 防弱网裂图错位的底层样式升级 */
-			.spotlight .image {
-				min-height: 350px !important;
-				background-color: #1c1d26 !important;
-				display: flex !important;
-				align-items: center !important;
-				justify-content: center !important;
-			}
-			.spotlight .image img {
-				display: block !important;
-				width: 100% !important;
-				height: 100% !important;
-				object-fit: cover !important;
-			}
-		</style>
-	</head>
-	<body class="landing is-preload">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Journey Yields Crescent ｜ JYC🌙</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body, html {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: #060a13 url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=90&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+        /* 极简高级名片卡片容器 */
+        .jike-card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 460px;
+            border-radius: 28px;
+            padding: 45px 35px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">JYC 🌙</a></h1>
-						<nav id="nav">
-							<ul>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>Menu</span></a>
-									<div id="menu">
-										<ul>
-											<li><a href="index.html">Home</a></li>
-											<li><a href="#one">核心主张</a></li>
-											<li><a href="#two">山海冒险</a></li>
-											<li><a href="#cta">取得联系</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-					</header>
+        /* 顶部干净的艺术标栏 */
+        .card-brand {
+            display: flex;
+            align-items: center;
+            color: #1e293b;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
 
-				<!-- Banner (大横幅区) -->
-					<section id="banner">
-						<div class="inner">
-							<h2>Journey Yields Crescent</h2>
-							<p>“ 慢慢来，一切皆有回甘 ”</p>
-							<ul class="actions special">
-								<li><a href="#one" class="button primary scrolly">进入领地</a></li>
-							</ul>
-						</div>
-						<a href="#one" class="more scrolly">Learn More</a>
-					</section>
+        /* 圆形人画像素级居中容器 */
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            background: #f1f5f9;
+        }
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%; 
+        }
 
-				<!-- One (宣言区：引入两句核心人生格言 + 全新独立态度宣言) -->
-					<section id="one" class="wrapper style1 special">
-						<div class="inner">
-							<header class="major">
-								<h2>清醒自持，温柔且有锋芒</h2>
-								<p>专注自我，静待花开 ✨</p>
-							</header>
-							<hr style="border-color: rgba(255,255,255,0.1); margin: 3em 0;" />
-							<header class="major">
-								<h3 style="letter-spacing: 4px; color: #fbbf24; text-transform: none;">🔒 私人领地 ～ ✨</h3>
-								<p style="font-size: 1.35rem; line-height: 2; font-weight: 300; color: #fff; text-transform: none;">
-									想发什么就发什么，<br />
-									想什么时候发就什么时候发。
-								</p>
-							</header>
-							
-							<!-- 恢复最具原厂厚重感的大型徽章图标 -->
-							<ul class="icons major">
-								<li><span class="icon fa-snowflake major style1"><span class="label">Skiing</span></span></li>
-								<li><span class="icon fa-tint major style2"><span class="label">Diving</span></span></li>
-								<li><span class="icon solid fa-bolt major style3"><span class="label">Adventure</span></span></li>
-							</ul>
-						</div>
-					</section>
+        /* 主标题 */
+        .user-name {
+            font-size: 1.55rem;
+            color: #0f172a;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
 
-				<!-- Two (极限运动聚光灯交替展示区 - 扩充至 6 大硬核场景) -->
-					<section id="two" class="wrapper alt style2">
-						
-						<!-- 1. 滑雪 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=800&q=80" alt="Skiing" /></div><div class="content">
-								<h2>🏂 破雪疾行 ｜ 触碰冬日的锋芒</h2>
-								<p>在粉雪与蔚蓝交织的无垠雪道上，感受重力与速度的纯粹碰撞。清醒，专注，在冰雪世界里释放内心的锋芒。</p>
-							</div>
-						</section>
+        /* 核心精神诗篇区 */
+        .poem-section {
+            width: 100%;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        .poem-line {
+            color: #475569;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            line-height: 2;
+            font-weight: 400;
+        }
+        .poem-highlight {
+            color: #0f172a;
+            font-weight: 600;
+            margin: 4px 0;
+        }
 
-						<!-- 2. 潜水 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Scuba Diving" /></div><div class="content">
-								<h2>🤿 深海下潜 ｜ 归于温柔的静谧</h2>
-								<p>坠入水晶般清澈的幽蓝深海，看阳光在珊瑚礁间折射成无声的诗。听呼吸的声音，专注自我，静待每一朵海底花开。</p>
-							</div>
-						</section>
+        /* 独立态度宣言卡片 */
+        .bio-statement {
+            background: #f8fafc;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            color: #334155;
+            line-height: 1.6;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            border: 1px solid #f1f5f9;
+        }
 
-						<!-- 3. 冲浪 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80" alt="Surfing" /></div><div class="content">
-								<h2>🏄‍♀️ 逐浪落日 ｜ 一切皆有回甘</h2>
-								<p>在金色晚霞笼罩的橘色海面，等待下一场巨浪的盛宴。慢慢来，在起伏不定的海浪中找到完美的平衡，享受海风带来的回甘。</p>
-							</div>
-						</section>
+        /* 全显邮箱按钮 */
+        .email-action {
+            width: 100%;
+        }
+        .email-btn {
+            display: block;
+            width: 100%;
+            background: #0f172a;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+        .email-btn:hover {
+            background: #1e293b;
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15);
+        }
 
-						<!-- 4. 岩壁芭蕾 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=800&q=80" alt="Rock Climbing" /></div><div class="content">
-								<h2>🧗‍♀️ 绝壁攀登 ｜ 每一步皆是确定</h2>
-								<p>指尖摸索着岩石的纹理，在悬崖绝壁上寻找唯一的支点。对抗引力，克制恐慌，这不仅是对高度的征服，更是内心笃定自持的修行。</p>
-							</div>
-						</section>
+        /* 右下角极简小飘带 */
+        .ribbon {
+            position: absolute;
+            bottom: -8px;
+            right: 12px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .ribbon a {
+            display: block;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        .ribbon:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
 
-						<!-- 5. 高空跳伞 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1521111833213-90d5bc5156eb?auto=format&fit=crop&w=800&q=80" alt="Skydiving" /></div><div class="content">
-								<h2>🪂 云端翱翔 ｜ 旅程终见新月</h2>
-								<p>从高空纵身一跃，破开重重云海，俯瞰大地的壮丽脉络。那是对未知的全然交付，也是 Journey Yields Crescent 旅途中最炽热的注脚。</p>
-							</div>
-						</section>
+        /* 优雅淡入动画 */
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-						<!-- 6. 极限飞跃 -->
-						<section class="spotlight">
-							<div class="image"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80" alt="Base Jumping" /></div><div class="content">
-								<h2>🦅 自由坠落 ｜ 狂风中的绝对专注</h2>
-								<p>跨越边缘的瞬间，世界只剩下呼啸的风声。在极限边缘保持最清醒的头脑，张开双臂，给生活一记最漂亮的绝地反击。</p>
-							</div>
-						</section>
+        @media (max-width: 400px) {
+            .jike-card { padding: 35px 20px; }
+            .user-name { font-size: 1.4rem; }
+            .poem-line { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
 
-					</section>
+    <div class="jike-card">
+        
+        <!-- 顶部艺术标识 -->
+        <div class="card-brand">
+            JOURNEY YIELDS CRESCENT
+        </div>
 
-				<!-- Three (核心精神标签) -->
-					<section id="three" class="wrapper style3 special">
-						<div class="inner">
-							<header class="major">
-								<h2>在山海间探索，在内心中沉淀</h2>
-								<p>每一段向外的冒险，都是一次向内的探寻。</p>
-							</header>
-							<ul class="features">
-								<li class="icon fa-compass">
-									<h3>探索未知</h3>
-									<p>不管是雪山的极寒还是深海的幽暗，都是拓展生命边界的养分。</p>
-								</li>
-								<li class="icon solid fa-heart">
-									<h3>保持松弛</h3>
-									<p>在澎湃的海浪与狂风中，学会在不确定中调整呼吸，慢慢前行。</p>
-								</li>
-								<li class="icon solid fa-moon">
-									<h3>静待花开</h3>
-									<p>回归日常，依旧清醒自持，不慌不忙，坚信万物有其定时。</p>
-								</li>
-							</ul>
-						</div>
-					</section>
+        <!-- 滇池路跃起头像 -->
+        <div class="avatar-container">
+            <img src="Fnqdtt6km546NUq9wbCbLeLaYplMv3.jpg" alt="JYC">
+        </div>
 
-				<!-- CTA (呼吁行动区：完美适配防截断大按钮) -->
-					<section id="cta" class="wrapper style4">
-						<div class="inner">
-							<header>
-								<h2>取得联系</h2>
-								<p>保持对宇宙的好奇。如果你想聊聊山海、冒险、或者只是随意打个招呼，欢迎写信给我。</p>
-							</header>
-							<ul class="actions stacked" style="width: 100%;">
-								<li>
-									<a href="mailto:apero.ju@gmail.com" class="button fit primary" style="
-										text-transform: none; 
-										white-space: nowrap; 
-										letter-spacing: 1px;
-										font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-									">✉️ EMAIL: apero.ju@gmail.com</a>
-								</li>
-							</ul>
-						</div>
-					</section>
+        <!-- 核心品牌名 -->
+        <h2 class="user-name">Journey Yields Crescent ｜ JYC🌙</h2>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-							<li><a href="mailto:apero.ju@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; Journey Yields Crescent</li>
-							<li>Domain: <a href="http://juju.jujujuhappy.win">juju.jujujuhappy.win</a></li>
-							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
+        <!-- 精神诗篇叙事区 -->
+        <div class="poem-section">
+            <p class="poem-line">走过漫长独行的路途</p>
+            <p class="poem-line">所有沉淀与奔赴</p>
+            <p class="poem-line poem-highlight">终会迎来属于自己的弯月星光🌙 ✨</p>
+            <p class="poem-line" style="color: #94a3b8; font-size: 0.85rem; margin-top: 6px;">“ 慢慢来，一切皆有回甘 ”</p>
+        </div>
 
-			</div>
+        <!-- 私人领地态度空间 -->
+        <div class="bio-statement">
+            清醒自持，温柔且有锋芒。想发什么就发什么，想什么时候发就什么时候发。
+        </div>
 
-		<!-- ================= 核心组件：电影级智能自动平滑滚动引擎 ================= -->
-		<script>
-			window.addEventListener('load', () => {
-				setTimeout(() => {
-					startAutoScroll();
-				}, 1500);
-			});
+        <!-- 联系方式 -->
+        <div class="email-action">
+            <a href="mailto:apero.ju@gmail.com" class="email-btn">✉️ apero.ju@gmail.com</a>
+        </div>
 
-			let scrollInterval;
-			const scrollSpeed = 1; 
+        <!-- 极简页脚标（已成功调整为根域名超链接） -->
+        <div class="ribbon">
+            <a href="http://jujujuhappy.win">jujujuhappy.win</a>
+        </div>
 
-			function startAutoScroll() {
-				scrollInterval = setInterval(() => {
-					window.scrollBy(0, scrollSpeed);
-					if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-						stopAutoScroll();
-					}
-				}, 16); 
-			}
+    </div>
 
-			function stopAutoScroll() {
-				if (scrollInterval) {
-					clearInterval(scrollInterval);
-					console.log("🔒 用户已接管屏幕。");
-				}
-			}
-
-			document.addEventListener('mousedown', stopAutoScroll, { once: true });
-			document.addEventListener('wheel', stopAutoScroll, { once: true });
-			document.addEventListener('touchstart', stopAutoScroll, { once: true });
-			document.addEventListener('keydown', stopAutoScroll, { once: true });
-		</script>
-		<!-- ========================================================================= -->
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+</body>
 </html>
