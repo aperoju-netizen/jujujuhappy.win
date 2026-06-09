@@ -45,6 +45,40 @@
             opacity: 0.8;
         }
 
+        /* 音乐播放控制器样式 */
+        .audio-controller {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            z-index: 10;
+        }
+        .audio-controller:hover {
+            background: #e2e8f0;
+            transform: scale(1.05);
+        }
+        .audio-icon {
+            width: 16px;
+            height: 16px;
+            fill: #475569;
+        }
+        .rotating {
+            animation: rotateIcon 3s linear infinite;
+        }
+        @keyframes rotateIcon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         /* 圆形人画像素级居中容器 */
         .avatar-container {
             width: 120px;
@@ -54,7 +88,7 @@
             border: 4px solid #ffffff;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             margin-bottom: 25px;
-            background: #f1f5f9;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
         }
         .avatar-container img {
             width: 100%;
@@ -63,13 +97,36 @@
             object-position: center 30%; 
         }
 
-        /* 主标题 */
-        .user-name {
-            font-size: 1.55rem;
+        /* 核心品牌名复合排版区域 */
+        .brand-name-container {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        .brand-en {
+            font-size: 1.15rem;
+            color: #64748b;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .brand-zh {
+            font-size: 1.65rem;
             color: #0f172a;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-zh::before, .brand-zh::after {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 1px;
+            background: #cbd5e1;
+            margin: 0 12px;
+            vertical-align: middle;
         }
 
         /* 核心精神诗篇区 */
@@ -84,11 +141,6 @@
             letter-spacing: 2px;
             line-height: 2;
             font-weight: 400;
-        }
-        .poem-highlight {
-            color: #0f172a;
-            font-weight: 600;
-            margin: 4px 0;
         }
 
         /* 独立态度宣言卡片 */
@@ -106,7 +158,7 @@
             border: 1px solid #f1f5f9;
         }
 
-        /* 社交矩阵区（兼顾文字留存与极客徽标的自适应平衡排版） */
+        /* 社交矩阵区 */
         .social-matrix {
             display: flex;
             align-items: center;
@@ -130,18 +182,17 @@
             font-weight: 600;
             letter-spacing: 0.5px;
             transition: all 0.25s ease;
-            white-space: nowrap; /* 防止屏幕缩放时文字尴尬换行 */
+            white-space: nowrap;
         }
         .social-item:hover {
             background: #1e293b !important;
             transform: translateY(-1px);
         }
         
-        /* 官方原厂矢量图标防御加固 */
         .social-icon {
             width: 16px !important;
             height: 16px !important;
-            fill: #ffffff !important; /* 100% 显色防御 */
+            fill: #ffffff !important;
             flex-shrink: 0 !important;
         }
 
@@ -195,7 +246,6 @@
             transform: translateY(-1px);
         }
 
-        /* 优雅淡入动画 */
         @keyframes fadeInCard {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -203,7 +253,8 @@
 
         @media (max-width: 400px) {
             .jike-card { padding: 35px 20px; }
-            .user-name { font-size: 1.4rem; }
+            .brand-en { font-size: 1.05rem; }
+            .brand-zh { font-size: 1.45rem; }
             .poem-line { font-size: 0.9rem; }
             .social-item { font-size: 0.76rem; gap: 6px; }
         }
@@ -211,21 +262,34 @@
 </head>
 <body>
 
+    <!-- 音频标签 -->
+    <audio id="bg-music" src="jyc.mp3" loop></audio>
+
     <div class="jike-card">
+        
+        <!-- 音乐控制按钮 -->
+        <div class="audio-controller" id="music-ctrl" title="播放/暂停音乐">
+            <svg class="audio-icon" id="music-icon" viewBox="0 0 24 24">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h6V3h-6z"/>
+            </svg>
+        </div>
         
         <!-- 顶部艺术标识 -->
         <div class="card-brand">
             JOURNEY YIELDS CRESCENT
         </div>
 
-        <!-- 滇池路跃起头像 -->
+        <!-- 头像区 -->
         <div class="avatar-container">
-            <img src="JYC.jpg" alt="JYC">
+            <img src="JYC.jpg" alt="JYC" onerror="this.style.display='none';">
         </div>
 
-        <!-- 核心品牌名 -->
-        <h2 class="user-name">Journey Yields Crescent </h2>
-        <h2 class="user-name">｜巨寅初｜</h2>
+        <!-- 优化后的高级名字排版区 -->
+        <div class="brand-name-container">
+            <h2 class="brand-zh">巨寅初</h2>
+            <div class="brand-en">J Y C</div>
+        </div>
+        
         <!-- 精神诗篇叙事区 -->
         <div class="poem-section">
             <p class="poem-line">走过漫长独行的路途</p>
@@ -233,14 +297,14 @@
             <p class="poem-line">终会迎来属于自己的弯月星光</p>
             <p class="poem-line">“ 慢慢来，一切皆有回甘 ”</p>
         </div>
+        
         <!-- 私人领地态度空间 -->
         <div class="bio-statement">
             清醒自持，温柔且有锋芒。
         </div>
 
-        <!-- 极简社交网络矩阵（官方经典矢量徽标 + 完整账号信息版） -->
+        <!-- 社交网络矩阵 -->
         <div class="social-matrix">
-            <!-- Instagram 原厂徽标与账号 -->
             <a href="https://www.instagram.com/aeo.ju" target="_blank" class="social-item">
                 <svg class="social-icon" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
@@ -248,7 +312,6 @@
                  aeo.ju
             </a>
             
-            <!-- 微信 原厂徽标与账号 -->
             <span class="social-item" style="cursor: text;">
                <svg class="social-icon" viewBox="0 0 24 24">
                     <path d="M15.3 12.3c0-.21-.18-.39-.39-.39-.21 0-.39.18-.39.39 0 .22.18.39.39.39.21 0 .39-.17.39-.39zm2.49 0c0-.21-.18-.39-.39-.39-.22 0-.39.18-.39.39 0 .22.17.39.39.39.21 0 .39-.17.39-.39zm1.36-2.58c.24-2.55-1.92-4.83-4.9-5.14-3.41-.35-6.52 1.64-7 4.79-.17 1.13.13 2.23.8 3.12l-.52 1.62c-.06.19.11.36.28.28l1.88-.94c.88.35 1.83.51 2.8.48 3.51-.12 6.47-2.3 6.66-4.21zm-10.74.07c0-.26-.22-.48-.48-.48-.27 0-.49.22-.49.48 0 .27.22.49.49.49.26 0 .48-.22.48-.49zm3.43 0c0-.26-.22-.48-.48-.48-.26 0-.48.22-.48.48 0 .27.22.49.48.49.26 0 .48-.22.48-.49zm2.39 4.88c-.14-.01-.27.05-.35.15l-.94.94-1.18-.39c-.11-.04-.24-.02-.34.05a5.558 5.558 0 01-2.48.59c-3.14 0-5.69-1.94-5.69-4.34 0-1.74 1.34-3.23 3.33-3.95-.08.35-.12.72-.12 1.1 0 3.2 2.91 5.8 6.51 5.8.42 0 .84-.04 1.25-.12.01-.01.01-.02.01-.03z"/>
@@ -257,7 +320,7 @@
             </span>
         </div>
 
-        <!-- 联系方式邮箱大按钮 -->
+        <!-- 联系方式邮箱 -->
         <div class="email-action">
             <a href="mailto:apero.ju@gmail.com" class="email-btn">
                 <svg class="social-icon" viewBox="0 0 24 24" style="width: 16px !important; height: 16px !important; margin-right: 8px;">
@@ -267,12 +330,55 @@
             </a>
         </div>
 
-        <!-- 极简页脚标 -->
+        <!-- 页脚标 -->
         <div class="ribbon">
             <a href="http://jujujuhappy.win">www.jujujuhappy.win</a>
         </div>
 
     </div>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const musicCtrl = document.getElementById('music-ctrl');
+        const musicIcon = document.getElementById('music-icon');
+
+        function togglePlay() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicIcon.classList.add('rotating');
+                }).catch(err => {
+                    console.log("播放被拦截: ", err);
+                });
+            } else {
+                music.pause();
+                musicIcon.classList.remove('rotating');
+            }
+        }
+
+        musicCtrl.addEventListener('click', function(e) {
+            e.stopPropagation();
+            togglePlay();
+        });
+
+        function autoPlayOnFirstInteraction() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicIcon.classList.add('rotating');
+                    document.removeEventListener('click', autoPlayOnFirstInteraction);
+                    document.removeEventListener('touchstart', autoPlayOnFirstInteraction);
+                }).catch(() => {});
+            }
+        }
+
+        document.addEventListener('click', autoPlayOnFirstInteraction);
+        document.addEventListener('touchstart', autoPlayOnFirstInteraction);
+
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            music.play().then(() => {
+                musicIcon.classList.add('rotating');
+            });
+        }, false);
+    </script>
 
 </body>
 </html>
